@@ -15,8 +15,4 @@ JFCustomWidget.subscribe('ready', function(){
             resize(458, 32);
         });
     });
-    
-    uploadcare.start({
-      publicKey: 'demopublickey'
-    });
 });
