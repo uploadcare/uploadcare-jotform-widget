@@ -1,15 +1,19 @@
 var widget = uploadcare.Widget('[role=uploadcare-uploader]');
 
-function resize() {
+function resize(w, h) {
     JFCustomWidget.requestFrameResize({
-        width: 618,
-        height: 500
+        width: w,
+        height: h
     });
 }
 
 JFCustomWidget.subscribe('ready', function(){
-    widget.onDialogOpen(function(){
-        resize();
+    widget.onDialogOpen(function(dialog){
+        resize(618, 500);
+        
+        dialog.always(function() {
+            resize(300, 35);
+        });
     });
     
     uploadcare.start({
