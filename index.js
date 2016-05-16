@@ -12,7 +12,7 @@ JFCustomWidget.subscribe('ready', function(){
         resize(618, 500);
         
         dialog.always(function() {
-            resize(300, 35);
+            resize(458, 32);
         });
     });
     
