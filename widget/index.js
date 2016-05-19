@@ -6,39 +6,36 @@ function resize(w, h) {
 }
 
 JFCustomWidget.subscribe('ready', function(){
-    var file = null;
+    var fileOrGroupUUID = null;
 
     JFCustomWidget.subscribe("submit", function(){
         var msg = {
-            valid: !!file,
-            value: file
+            valid: !!fileOrGroupUUID,
+            value: fileOrGroupUUID
         };
         JFCustomWidget.sendSubmit(msg);
     });
 
-    UPLOADCARE_PUBLIC_KEY = JFCustomWidget.getWidgetSetting('publicKey');
-    UPLOADCARE_LOCALE = JFCustomWidget.getWidgetSetting('locale') || 'en';
-    UPLOADCARE_IMAGES_ONLY = (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes');
+    uploadcare.start({
+        publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
+        locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
+        imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
+        multiple: (JFCustomWidget.getWidgetSetting('multiple') == 'Yes'),
+        previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
+        tabs: 'all'
+    });
 
-    var s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = 'https://ucarecdn.com/widget/2.8.2/uploadcare/uploadcare.full.min.js';
+    var widget = uploadcare.Widget('[role=uploadcare-uploader]');
 
-    s.onload = function() {
-        var widget = uploadcare.Widget('[role=uploadcare-uploader]');
-        widget.onDialogOpen(function(dialog){
-            resize(618, 500);
+    widget.onDialogOpen(function(dialog){
+        resize(618, 600);
 
-            dialog.always(function() {
-                resize(458, 32);
+        dialog.always(function() {
+            resize(458, 32);
 
-            });
         });
-        widget.onUploadComplete(function(info) {
-            file = info.cdnUrl;
-        });
-    };
-
-    document.body.appendChild(s);
+    });
+    widget.onUploadComplete(function(info) {
+        fileOrGroupUUID = info.uuid;
+    });
 });
