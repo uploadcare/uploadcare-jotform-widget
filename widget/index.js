@@ -36,6 +36,6 @@ JFCustomWidget.subscribe('ready', function(){
         });
     });
     widget.onUploadComplete(function(info) {
-        fileOrGroupUUID = info.uuid;
+        fileOrGroupUUID = info.cdnUrl;
     });
 });
