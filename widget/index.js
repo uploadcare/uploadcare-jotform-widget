@@ -6,12 +6,12 @@ function resize(w, h) {
 }
 
 JFCustomWidget.subscribe('ready', function(){
-    var files = null;
+    var files = [];
 
     JFCustomWidget.subscribe("submit", function(){
         var msg = {
-            valid: !!files,
-            value: files
+            valid: !!files.length,
+            value: files.join('\n')
         };
         JFCustomWidget.sendSubmit(msg);
     });
@@ -37,15 +37,12 @@ JFCustomWidget.subscribe('ready', function(){
     });
     
     widget.onChange(function(file) {
-        var resultFiles = [];
         var uploadedFiles = file.files ? file.files() : [file];
         
         uploadedFiles.forEach(function(uploadedFile) {
             uploadedFile.done(function(fileInfo) {
-                resultFiles.push(fileInfo.cdnUrl);
+                file.push(fileInfo.cdnUrl);
             });
         });
-        
-        files = resultFiles.length ? resultFiles.join('\n') : null;
     });
 });
