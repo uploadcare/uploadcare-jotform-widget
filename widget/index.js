@@ -6,12 +6,12 @@ function resize(w, h) {
 }
 
 JFCustomWidget.subscribe('ready', function(){
-    var fileOrGroupUUID = null;
+    var files = null;
 
     JFCustomWidget.subscribe("submit", function(){
         var msg = {
-            valid: !!fileOrGroupUUID,
-            value: fileOrGroupUUID
+            valid: !!files,
+            value: files
         };
         JFCustomWidget.sendSubmit(msg);
     });
@@ -35,7 +35,17 @@ JFCustomWidget.subscribe('ready', function(){
 
         });
     });
-    widget.onUploadComplete(function(info) {
-        fileOrGroupUUID = info.cdnUrl;
+    
+    widget.onChange(function(file) {
+        var resultFiles = [];
+        var uploadedFiles = file.files ? file.files() : [file];
+        
+        uploadedFiles.forEach(function(uploadedFile) {
+            uploadedFile.done(function(fileInfo) {
+                resultFiles.push(fileInfo.cdnUrl);
+            });
+        });
+        
+        files = resultFiles.length ? resultFiles.join('\n') : null;
     });
 });
