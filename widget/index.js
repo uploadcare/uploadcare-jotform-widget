@@ -41,7 +41,7 @@ JFCustomWidget.subscribe('ready', function(){
         
         uploadedFiles.forEach(function(uploadedFile) {
             uploadedFile.done(function(fileInfo) {
-                file.push(fileInfo.cdnUrl);
+                files.push(fileInfo.cdnUrl);
             });
         });
     });
