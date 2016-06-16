@@ -19,11 +19,10 @@ JFCustomWidget.subscribe('ready', function(data){
 
     var widget = uploadcare.Widget('[role=uploadcare-uploader]');
 
-    var files = [];
-    var submitedFiles = (data && data.value) ? data.value.split("\n") : [];
+    var files = (data && data.value) ? data.value.split("\n") : [];
 
-    if(submitedFiles.length) {
-        widget.value(isMultiple ? submitedFiles : submitedFiles[0]);
+    if(files.length) {
+        widget.value(isMultiple ? files : files[0]);
     }
 
     JFCustomWidget.subscribe("submit", function(){
@@ -44,6 +43,7 @@ JFCustomWidget.subscribe('ready', function(data){
     });
     
     widget.onChange(function(file) {
+        files = [];
         var uploadedFiles = file.files ? file.files() : [file];
         
         uploadedFiles.forEach(function(uploadedFile) {
