@@ -1,3 +1,5 @@
+/* global JFCustomWidget, uploadcare */
+
 function resize(w, h) {
 	JFCustomWidget.requestFrameResize({
 		width: w,
@@ -19,13 +21,13 @@ JFCustomWidget.subscribe('ready', function(data) {
 
 	var widget = uploadcare.Widget('[role=uploadcare-uploader]');
 
-	var files = (data && data.value) ? data.value.split("\n") : [];
+	var files = (data && data.value) ? data.value.split('\n') : [];
 
 	if (files.length) {
 		widget.value(isMultiple ? files : files[0]);
 	}
 
-	JFCustomWidget.subscribe("submit", function() {
+	JFCustomWidget.subscribe('submit', function() {
 		var msg = {
 			valid: !!files.length,
 			value: files.join('\n')
