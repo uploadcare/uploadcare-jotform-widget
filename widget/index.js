@@ -1,14 +1,20 @@
 /* global JFCustomWidget, uploadcare */
 
-function resize(w, h) {
+/**
+ * Resize JotForm widget frame
+ *
+ * @param width
+ * @param height
+ */
+function resize(width, height) {
 	JFCustomWidget.requestFrameResize({
-		width: w,
-		height: h
-	});
+		width: width,
+		height: height,
+	})
 }
 
 JFCustomWidget.subscribe('ready', function(data) {
-	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes');
+	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes')
 
 	uploadcare.start({
 		publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
@@ -16,42 +22,42 @@ JFCustomWidget.subscribe('ready', function(data) {
 		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
 		multiple: isMultiple,
 		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
-		tabs: 'all'
-	});
+		tabs: 'all',
+	})
 
-	var widget = uploadcare.Widget('[role=uploadcare-uploader]');
+	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
 
-	var files = (data && data.value) ? data.value.split('\n') : [];
+	var files = (data && data.value) ? data.value.split('\n') : []
 
 	if (files.length) {
-		widget.value(isMultiple ? files : files[0]);
+		widget.value(isMultiple ? files : files[0])
 	}
 
 	JFCustomWidget.subscribe('submit', function() {
 		var msg = {
 			valid: !!files.length,
-			value: files.join('\n')
-		};
-		JFCustomWidget.sendSubmit(msg);
-	});
+			value: files.join('\n'),
+		}
+
+		JFCustomWidget.sendSubmit(msg)
+	})
 
 	widget.onDialogOpen(function(dialog) {
-		resize(618, 600);
+		resize(618, 600)
 
 		dialog.always(function() {
-			resize(458, 32);
-
-		});
-	});
+			resize(458, 32)
+		})
+	})
 
 	widget.onChange(function(file) {
-		files = [];
-		var uploadedFiles = file.files ? file.files() : [file];
+		files = []
+		var uploadedFiles = file.files ? file.files() : [file]
 
 		uploadedFiles.forEach(function(uploadedFile) {
 			uploadedFile.done(function(fileInfo) {
-				files.push(fileInfo.cdnUrl);
-			});
-		});
-	});
-});
+				files.push(fileInfo.cdnUrl)
+			})
+		})
+	})
+})
