@@ -1,55 +1,63 @@
-function resize(w, h) {
-    JFCustomWidget.requestFrameResize({
-        width: w,
-        height: h
-    });
+/* global JFCustomWidget, uploadcare */
+
+/**
+ * Resize JotForm widget frame
+ *
+ * @param width
+ * @param height
+ */
+function resize(width, height) {
+	JFCustomWidget.requestFrameResize({
+		width: width,
+		height: height,
+	})
 }
 
-JFCustomWidget.subscribe('ready', function(data){
-    var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes');
+JFCustomWidget.subscribe('ready', function(data) {
+	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes')
 
-    uploadcare.start({
-        publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
-        locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
-        imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
-        multiple: isMultiple,
-        previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
-        tabs: 'all'
-    });
+	uploadcare.start({
+		publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
+		locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
+		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
+		multiple: isMultiple,
+		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
+		tabs: 'all',
+	})
 
-    var widget = uploadcare.Widget('[role=uploadcare-uploader]');
+	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
 
-    var files = (data && data.value) ? data.value.split("\n") : [];
+	var files = (data && data.value) ? data.value.split('\n') : []
 
-    if(files.length) {
-        widget.value(isMultiple ? files : files[0]);
-    }
+	if (files.length) {
+		widget.value(isMultiple ? files : files[0])
+	}
 
-    JFCustomWidget.subscribe("submit", function(){
-        var msg = {
-            valid: !!files.length,
-            value: files.join('\n')
-        };
-        JFCustomWidget.sendSubmit(msg);
-    });
+	JFCustomWidget.subscribe('submit', function() {
+		var msg = {
+			valid: !!files.length,
+			value: files.join('\n'),
+		}
 
-    widget.onDialogOpen(function(dialog){
-        resize(618, 600);
+		JFCustomWidget.sendSubmit(msg)
+	})
 
-        dialog.always(function() {
-            resize(458, 32);
+	widget.onDialogOpen(function(dialog) {
+		resize(618, 600)
 
-        });
-    });
-    
-    widget.onChange(function(file) {
-        files = [];
-        var uploadedFiles = file.files ? file.files() : [file];
-        
-        uploadedFiles.forEach(function(uploadedFile) {
-            uploadedFile.done(function(fileInfo) {
-                files.push(fileInfo.cdnUrl);
-            });
-        });
-    });
-});
+		dialog.always(function() {
+			resize(458, 32)
+		})
+	})
+
+	widget.onChange(function(file) {
+		files = []
+		var uploadedFiles = file.files ? file.files() : [file]
+
+		uploadedFiles.forEach(function(uploadedFile) {
+			uploadedFile.done(function(fileInfo) {
+				files.push(fileInfo.cdnUrl)
+			})
+		})
+	})
+})
