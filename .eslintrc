@@ -1,6 +1,12 @@
 {
+  "parserOptions": {
+	"ecmaVersion": 5
+  },
   "env": {
 	"browser": true
   },
-  "extends": "uploadcare"
+  "extends": "uploadcare",
+  "rules": {
+	"indent": ["error", "tab", { "SwitchCase": 1 }]
+  }
 }
