@@ -73,7 +73,6 @@ JFCustomWidget.subscribe('ready', function(data) {
 		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
 		multiple: isMultiple,
 		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
-		tabs: 'all',
 		crop: cropOption(
 			JFCustomWidget.getWidgetSetting('crop'),
 			JFCustomWidget.getWidgetSetting('cropWidth'),
