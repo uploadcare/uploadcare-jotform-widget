@@ -36,7 +36,7 @@ function cropOption(mode, width, height) {
 }
 
 function cleanGlobalSettings(str) {
-	var expr = /(UPLOADCARE_\w+)\s*=\s*({(\n(.+\n)+};)|{(.+};)|{((.+\n)+};)|([\w'":/\.,]+);)/gm
+	var expr = /(UPLOADCARE_\w+)\s*=\s*({(\n(.+\n)+};)|{(.+};)|{((.+\n)+};)|([\w'":/\.\s,]+);)/gm
 
 	try {
 		var result = str.match(expr)
