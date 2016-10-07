@@ -35,8 +35,37 @@ function cropOption(mode, width, height) {
 	}
 }
 
+function cleanGlobalSettings(str) {
+	var expr = /(UPLOADCARE_\w+)\s*=\s*({(\n(.+\n)+};)|{(.+};)|{((.+\n)+};)|([\w'":/\.,]+);)/gm
+
+	try {
+		var result = str.match(expr)
+
+		return result ? result.join('\n') : ''
+	}
+	catch(error) {
+		console.error(error)
+
+		return ''
+	}
+}
+
 JFCustomWidget.subscribe('ready', function(data) {
 	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes')
+
+	var globalSettings = JFCustomWidget.getWidgetSetting('globalSettings')
+
+	if (globalSettings) {
+		globalSettings = cleanGlobalSettings(globalSettings)
+
+		if (globalSettings) {
+			var script = document.createElement('script')
+
+			script.innerHTML = globalSettings
+
+			document.head.appendChild(script)
+		}
+	}
 
 	uploadcare.start({
 		publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
