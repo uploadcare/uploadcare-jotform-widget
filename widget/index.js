@@ -13,6 +13,28 @@ function resize(width, height) {
 	})
 }
 
+function cropOption(mode, width, height) {
+	switch (mode) {
+		case 'free crop':
+			return 'free'
+			break
+		case 'aspect ratio':
+			return parseInt(width) + ':' + parseInt(height)
+			break
+		case 'downscale':
+			return parseInt(width) + 'x' + parseInt(height)
+			break
+		case 'downscale & upscale':
+			return parseInt(width) + 'x' + parseInt(height) + ' upscale'
+			break
+		case 'downscale & minimum size':
+			return parseInt(width) + 'x' + parseInt(height) + ' minimum'
+			break
+		default:
+			return 'disabled'
+	}
+}
+
 JFCustomWidget.subscribe('ready', function(data) {
 	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes')
 
@@ -23,6 +45,11 @@ JFCustomWidget.subscribe('ready', function(data) {
 		multiple: isMultiple,
 		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
 		tabs: 'all',
+		crop: cropOption(
+			JFCustomWidget.getWidgetSetting('crop'),
+			JFCustomWidget.getWidgetSetting('cropWidth'),
+			JFCustomWidget.getWidgetSetting('cropHeight')
+		),
 	})
 
 	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
