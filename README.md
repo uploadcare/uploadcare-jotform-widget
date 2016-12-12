@@ -41,5 +41,3 @@ A live Uploadcare-enabled web form can be found
 
 * [@Zmoki](https://github.com/Zmoki)
 * [@dmitry-mukhin](https://github.com/dmitry-mukhin)
-
-Current maintainer — [@Zmoki](https://github.com/Zmoki).
