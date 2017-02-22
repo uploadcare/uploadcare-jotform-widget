@@ -13,8 +13,59 @@ function resize(width, height) {
 	})
 }
 
+function cropOption(mode, width, height) {
+	switch (mode) {
+		case 'free crop':
+			return 'free'
+			break
+		case 'aspect ratio':
+			return parseInt(width) + ':' + parseInt(height)
+			break
+		case 'downscale':
+			return parseInt(width) + 'x' + parseInt(height)
+			break
+		case 'downscale & upscale':
+			return parseInt(width) + 'x' + parseInt(height) + ' upscale'
+			break
+		case 'downscale & minimum size':
+			return parseInt(width) + 'x' + parseInt(height) + ' minimum'
+			break
+		default:
+			return 'disabled'
+	}
+}
+
+function cleanGlobalSettings(str) {
+	var expr = /(UPLOADCARE_\w+)\s*=\s*({(\n(.+\n)+};)|{(.+};)|{((.+\n)+};)|([\w'":/\.\s,]+);)/gm
+
+	try {
+		var result = str.match(expr)
+
+		return result ? result.join('\n') : ''
+	}
+	catch(error) {
+		console.error(error)
+
+		return ''
+	}
+}
+
 JFCustomWidget.subscribe('ready', function(data) {
 	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes')
+
+	var globalSettings = JFCustomWidget.getWidgetSetting('globalSettings')
+
+	if (globalSettings) {
+		globalSettings = cleanGlobalSettings(globalSettings)
+
+		if (globalSettings) {
+			var script = document.createElement('script')
+
+			script.innerHTML = globalSettings
+
+			document.head.appendChild(script)
+		}
+	}
 
 	uploadcare.start({
 		publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
@@ -22,7 +73,11 @@ JFCustomWidget.subscribe('ready', function(data) {
 		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
 		multiple: isMultiple,
 		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
-		tabs: 'all',
+		crop: cropOption(
+			JFCustomWidget.getWidgetSetting('crop'),
+			JFCustomWidget.getWidgetSetting('cropWidth'),
+			JFCustomWidget.getWidgetSetting('cropHeight')
+		),
 	})
 
 	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
