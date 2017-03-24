@@ -28,6 +28,9 @@ for most of the issues regarding:
 * Uploadcare and JotForm integration.
 * Using and configuring our File Uploader.
 
+For the examples of advanced customization see [this](http://kb.uploadcare.com/article/261-how-can-i-set-widget-crop-ratio-based-on-jotform-input-field) article in our
+knowledge base.
+
 More info about Uploadcare Widget itself
 can be found in our
 [documentation](https://uploadcare.com/documentation/widget/).
@@ -41,3 +44,4 @@ A live Uploadcare-enabled web form can be found
 
 * [@Zmoki](https://github.com/Zmoki)
 * [@dmitry-mukhin](https://github.com/dmitry-mukhin)
+* [@khazamov](https://github.com/khazamov)

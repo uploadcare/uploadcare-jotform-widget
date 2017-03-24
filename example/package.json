@@ -1,0 +1,22 @@
+{
+  "name": "uploadcare-jotform-sample-page",
+  "version": "1.0.0",
+  "description": "Sample page that contains JF",
+  "scripts": {
+    "start": "browser-sync start --server \".\"  --files \".\" --no-notify --port 3000 --cors=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uploadcare/uploadcare-jotform-widget.git"
+  },
+  "author": "Zarema Khalilova",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uploadcare/uploadcare-jotform-widget/issues"
+  },
+  "homepage": "https://github.com/uploadcare/uploadcare-jotform-widget#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "gulp": "^3.9.1"
+  }
+}

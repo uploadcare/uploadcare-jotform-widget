@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Uploadcare widget like a widget for JorForm",
   "scripts": {
-	"start": "browser-sync start --server \"widget\" --files \"widget\" --no-notify --port 3003"
+	"start": "browser-sync start --server \"widget\" --config=\"./bs-config.js\" --files \"./widget\" --no-notify --port 3003 --cors=true"
   },
   "repository": {
 	"type": "git",
@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/uploadcare/uploadcare-jotform-widget#readme",
   "devDependencies": {
-	"browser-sync": "^2.12.8"
+	"browser-sync": "^2.12.8",
+  "gulp": "^3.9.1"
   }
 }
