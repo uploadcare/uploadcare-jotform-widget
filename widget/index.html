@@ -29,16 +29,23 @@
 	<meta name="msapplication-TileImage" content="https://ucarecdn.com/assets/images/favicons/mstile-144x144.1e7522cf4c24.png">
 	<meta name="msapplication-config" content="https://ucarecdn.com/assets/images/favicons/browserconfig.df0a45215b92.xml">
 	<meta name="theme-color" content="#ffffff">
-
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
 </head>
 <body>
-<input type="hidden" role="uploadcare-uploader"/>
+<input type="hidden" role="uploadcare-uploader" id="uploader"/>
 
 <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
+<script src='https://js.jotform.com/QuestionNaming.min.js'></script>
+
 <script>
+
+
+
 	UPLOADCARE_MANUAL_START = true;
+	UPLOADCARE_LIVE = false;
 	UPLOADCARE__EMPTY_KEY_TEXT = ''
+	
 			+ '<div class="uploadcare-dialog-message-center">'
 			+ '<div class="uploadcare-dialog-big-title">Hello!</div>'
 			+ '<div class="uploadcare-dialog-large-text">'
@@ -48,7 +55,11 @@
 			+ '  <div>update JotForm widget and set <b>Public key</b>.</div>'
 			+ '</div>'
 			+ '</div>';
+
+
+
 </script>
+
 <script src="https://ucarecdn.com/libs/widget/2.x/uploadcare.full.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 </body>
