@@ -35,36 +35,17 @@ function cropOption(mode, width, height) {
 	}
 }
 
-function cleanGlobalSettings(str) {
-	var expr = /(UPLOADCARE_\w+)\s*=\s*({(\n(.+\n)+};)|{(.+};)|{((.+\n)+};)|([\w'":/\.\s,]+);)/gm
-
-	try {
-		var result = str.match(expr)
-
-		return result ? result.join('\n') : ''
-	}
-	catch(error) {
-		console.error(error)
-
-		return ''
-	}
-}
-
 JFCustomWidget.subscribe('ready', function(data) {
 	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes')
 
 	var globalSettings = JFCustomWidget.getWidgetSetting('globalSettings')
 
 	if (globalSettings) {
-		globalSettings = cleanGlobalSettings(globalSettings)
+		var script = document.createElement('script')
 
-		if (globalSettings) {
-			var script = document.createElement('script')
+		script.innerHTML = globalSettings
 
-			script.innerHTML = globalSettings
-
-			document.head.appendChild(script)
-		}
+		document.head.appendChild(script)
 	}
 
 	uploadcare.start({
