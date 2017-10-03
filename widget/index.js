@@ -53,6 +53,7 @@ JFCustomWidget.subscribe('ready', function(data) {
 		locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
 		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
 		multiple: isMultiple,
+		multipleMax: JFCustomWidget.getWidgetSetting('multipleMax'),
 		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
 		crop: cropOption(
 			JFCustomWidget.getWidgetSetting('crop'),
