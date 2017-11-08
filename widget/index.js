@@ -52,13 +52,16 @@ JFCustomWidget.subscribe('ready', function(data) {
 		publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
 		locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
 		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
-		multiple: isMultiple,
 		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
+		multiple: isMultiple,
+		multipleMin: JFCustomWidget.getWidgetSetting('multipleMin'),
+		multipleMax: JFCustomWidget.getWidgetSetting('multipleMax'),
 		crop: cropOption(
 			JFCustomWidget.getWidgetSetting('crop'),
 			JFCustomWidget.getWidgetSetting('cropWidth'),
 			JFCustomWidget.getWidgetSetting('cropHeight')
 		),
+		imageShrink: JFCustomWidget.getWidgetSetting('imageShrink'),
 	})
 
 	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
