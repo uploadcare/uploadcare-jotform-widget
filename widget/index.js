@@ -85,7 +85,7 @@ JFCustomWidget.subscribe('ready', function(data) {
 		resize(618, 600)
 
 		dialog.always(function() {
-			resize(458, 32)
+			resize(618, 40)
 		})
 	})
 
