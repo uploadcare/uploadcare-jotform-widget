@@ -36,7 +36,8 @@ function cropOption(mode, width, height) {
 }
 
 JFCustomWidget.subscribe('ready', function(data) {
-	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') == 'Yes')
+	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') === 'Yes')
+	var hasEffectsTab = (JFCustomWidget.getWidgetSetting('effectsTab') === 'Yes')
 
 	var globalSettings = JFCustomWidget.getWidgetSetting('globalSettings')
 
@@ -47,18 +48,36 @@ JFCustomWidget.subscribe('ready', function(data) {
 
 		document.head.appendChild(script)
 	}
+	
+	if (hasEffectsTab) {
+		var effectsTabScript = document.createElement('script')
+		var indexScript = document.getElementById('index-script')
+		
+		effectsTabScript.addEventListener('load', function() {
+			if (window.uploadcareTabEffects) {
+				uploadcare.registerTab('preview', window.uploadcareTabEffects)
+			}
+		})
+		effectsTabScript.src = 'https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js'
+		
+		indexScript.parentNode.insertBefore(effectsTabScript, indexScript)
+	}
 
 	uploadcare.start({
 		publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
 		locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
-		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') == 'Yes'),
+		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') === 'Yes'),
+		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') === 'Yes'),
 		multiple: isMultiple,
-		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') == 'Yes'),
+		multipleMin: JFCustomWidget.getWidgetSetting('multipleMin'),
+		multipleMax: JFCustomWidget.getWidgetSetting('multipleMax'),
 		crop: cropOption(
 			JFCustomWidget.getWidgetSetting('crop'),
 			JFCustomWidget.getWidgetSetting('cropWidth'),
 			JFCustomWidget.getWidgetSetting('cropHeight')
 		),
+		imageShrink: JFCustomWidget.getWidgetSetting('imageShrink'),
+		effects: JFCustomWidget.getWidgetSetting('effects'),
 	})
 
 	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
@@ -82,7 +101,7 @@ JFCustomWidget.subscribe('ready', function(data) {
 		resize(618, 600)
 
 		dialog.always(function() {
-			resize(458, 32)
+			resize(618, 40)
 		})
 	})
 
