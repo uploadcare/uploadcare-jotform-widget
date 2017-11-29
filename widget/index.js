@@ -107,11 +107,14 @@ JFCustomWidget.subscribe('ready', function(data) {
 
 	widget.onChange(function(file) {
 		files = []
+		var fileInfos = []
 		var uploadedFiles = file.files ? file.files() : [file]
 
 		uploadedFiles.forEach(function(uploadedFile) {
 			uploadedFile.done(function(fileInfo) {
+				fileInfos.push(fileInfo.name)
 				files.push(fileInfo.cdnUrl)
+				JFCustomWidget.sendData({value:fileInfos.join(',')})
 			})
 		})
 	})
