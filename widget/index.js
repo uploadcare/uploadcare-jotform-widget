@@ -99,13 +99,15 @@ JFCustomWidget.subscribe('ready', function(data) {
 	widget.onChange(function(file) {
 		files = []
 
-		var uploadedFiles = file.files ? file.files() : [file]
+		if (file) {
+			var uploadedFiles = file.files ? file.files() : [file]
 
-		uploadedFiles.forEach(function(uploadedFile) {
-			uploadedFile.done(function(fileInfo) {
-				files.push(fileInfo.cdnUrl)
+			uploadedFiles.forEach(function(uploadedFile) {
+				uploadedFile.done(function(fileInfo) {
+					files.push(fileInfo.cdnUrl)
+				})
 			})
-		})
+		}
 	})
 
 	JFCustomWidget.subscribe('submit', function() {
