@@ -82,21 +82,6 @@ JFCustomWidget.subscribe('ready', function(data) {
 
 	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
 
-	var files = (data && data.value) ? data.value.split('\n') : []
-
-	if (files.length) {
-		widget.value(isMultiple ? files : files[0])
-	}
-
-	JFCustomWidget.subscribe('submit', function() {
-		var msg = {
-			valid: !!files.length,
-			value: files.join('\n'),
-		}
-
-		JFCustomWidget.sendSubmit(msg)
-	})
-
 	widget.onDialogOpen(function(dialog) {
 		resize(618, 600)
 
@@ -105,14 +90,39 @@ JFCustomWidget.subscribe('ready', function(data) {
 		})
 	})
 
+	var files = (data && data.value) ? data.value.split('\n') : []
+
+	if (files.length) {
+		widget.value(isMultiple ? files : files[0])
+	}
+
 	widget.onChange(function(file) {
 		files = []
-		var uploadedFiles = file.files ? file.files() : [file]
 
-		uploadedFiles.forEach(function(uploadedFile) {
-			uploadedFile.done(function(fileInfo) {
-				files.push(fileInfo.cdnUrl)
+		if (file) {
+			var uploadedFiles = file.files ? file.files() : [file]
+
+			uploadedFiles.forEach(function(uploadedFile) {
+				uploadedFile.done(function(fileInfo) {
+					files.push(fileInfo.cdnUrl)
+				})
 			})
-		})
+		}
+		else {
+			JFCustomWidget.sendData({value: ''})
+		}
+	})
+
+	widget.onUploadComplete(function() {
+		JFCustomWidget.sendData({value: files.join('\n')})
+	})
+
+	JFCustomWidget.subscribe('submit', function() {
+		var msg = {
+			valid: !!files.length,
+			value: files.join('\n'),
+		}
+
+		JFCustomWidget.sendSubmit(msg)
 	})
 })
