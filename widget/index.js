@@ -7,122 +7,117 @@
  * @param height
  */
 function resize(width, height) {
-	JFCustomWidget.requestFrameResize({
-		width: width,
-		height: height,
-	})
+  JFCustomWidget.requestFrameResize({
+    width: width,
+    height: height,
+  })
 }
 
 function cropOption(mode, width, height) {
-	switch (mode) {
-		case 'free crop':
-			return 'free'
-			break
-		case 'aspect ratio':
-			return parseInt(width) + ':' + parseInt(height)
-			break
-		case 'downscale':
-			return parseInt(width) + 'x' + parseInt(height)
-			break
-		case 'downscale & upscale':
-			return parseInt(width) + 'x' + parseInt(height) + ' upscale'
-			break
-		case 'downscale & minimum size':
-			return parseInt(width) + 'x' + parseInt(height) + ' minimum'
-			break
-		default:
-			return 'disabled'
-	}
+  switch (mode) {
+  case 'free crop':
+    return 'free'
+  case 'aspect ratio':
+    return parseInt(width) + ':' + parseInt(height)
+  case 'downscale':
+    return parseInt(width) + 'x' + parseInt(height)
+  case 'downscale & upscale':
+    return parseInt(width) + 'x' + parseInt(height) + ' upscale'
+  case 'downscale & minimum size':
+    return parseInt(width) + 'x' + parseInt(height) + ' minimum'
+  default:
+    return 'disabled'
+  }
 }
 
 JFCustomWidget.subscribe('ready', function(data) {
-	var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') === 'Yes')
-	var hasEffectsTab = (JFCustomWidget.getWidgetSetting('effectsTab') === 'Yes')
+  var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') === 'Yes')
+  var hasEffectsTab = (JFCustomWidget.getWidgetSetting('effectsTab') === 'Yes')
 
-	var globalSettings = JFCustomWidget.getWidgetSetting('globalSettings')
+  var globalSettings = JFCustomWidget.getWidgetSetting('globalSettings')
 
-	if (globalSettings) {
-		var script = document.createElement('script')
+  if (globalSettings) {
+    var script = document.createElement('script')
 
-		script.innerHTML = globalSettings
+    script.innerHTML = globalSettings
 
-		document.head.appendChild(script)
-	}
-	
-	if (hasEffectsTab) {
-		var effectsTabScript = document.createElement('script')
-		var indexScript = document.getElementById('index-script')
-		
-		effectsTabScript.addEventListener('load', function() {
-			if (window.uploadcareTabEffects) {
-				uploadcare.registerTab('preview', window.uploadcareTabEffects)
-			}
-		})
-		effectsTabScript.src = 'https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js'
-		
-		indexScript.parentNode.insertBefore(effectsTabScript, indexScript)
-	}
+    document.head.appendChild(script)
+  }
 
-	uploadcare.start({
-		publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
-		locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
-		imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') === 'Yes'),
-		previewStep: (JFCustomWidget.getWidgetSetting('previewStep') === 'Yes'),
-		multiple: isMultiple,
-		multipleMin: JFCustomWidget.getWidgetSetting('multipleMin'),
-		multipleMax: JFCustomWidget.getWidgetSetting('multipleMax'),
-		crop: cropOption(
-			JFCustomWidget.getWidgetSetting('crop'),
-			JFCustomWidget.getWidgetSetting('cropWidth'),
-			JFCustomWidget.getWidgetSetting('cropHeight')
-		),
-		imageShrink: JFCustomWidget.getWidgetSetting('imageShrink'),
-		effects: JFCustomWidget.getWidgetSetting('effects'),
-	})
+  if (hasEffectsTab) {
+    var effectsTabScript = document.createElement('script')
+    var indexScript = document.getElementById('index-script')
 
-	var widget = uploadcare.Widget('[role=uploadcare-uploader]')
+    effectsTabScript.addEventListener('load', function() {
+      if (window.uploadcareTabEffects) {
+        uploadcare.registerTab('preview', window.uploadcareTabEffects)
+      }
+    })
+    effectsTabScript.src = 'https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js'
 
-	widget.onDialogOpen(function(dialog) {
-		resize(618, 600)
+    indexScript.parentNode.insertBefore(effectsTabScript, indexScript)
+  }
 
-		dialog.always(function() {
-			resize(458, 40)
-		})
-	})
+  uploadcare.start({
+    publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
+    locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
+    imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') === 'Yes'),
+    previewStep: (JFCustomWidget.getWidgetSetting('previewStep') === 'Yes'),
+    multiple: isMultiple,
+    multipleMin: JFCustomWidget.getWidgetSetting('multipleMin'),
+    multipleMax: JFCustomWidget.getWidgetSetting('multipleMax'),
+    crop: cropOption(
+      JFCustomWidget.getWidgetSetting('crop'),
+      JFCustomWidget.getWidgetSetting('cropWidth'),
+      JFCustomWidget.getWidgetSetting('cropHeight')
+    ),
+    imageShrink: JFCustomWidget.getWidgetSetting('imageShrink'),
+    effects: JFCustomWidget.getWidgetSetting('effects'),
+  })
 
-	var files = (data && data.value) ? data.value.split('\n') : []
+  var widget = uploadcare.Widget('[role=uploadcare-uploader]')
 
-	if (files.length) {
-		widget.value(isMultiple ? files : files[0])
-	}
+  widget.onDialogOpen(function(dialog) {
+    resize(618, 600)
 
-	widget.onChange(function(file) {
-		files = []
+    dialog.always(function() {
+      resize(458, 40)
+    })
+  })
 
-		if (file) {
-			var uploadedFiles = file.files ? file.files() : [file]
+  var files = (data && data.value) ? data.value.split('\n') : []
 
-			uploadedFiles.forEach(function(uploadedFile) {
-				uploadedFile.done(function(fileInfo) {
-					files.push(fileInfo.cdnUrl)
-				})
-			})
-		}
-		else {
-			JFCustomWidget.sendData({value: ''})
-		}
-	})
+  if (files.length) {
+    widget.value(isMultiple ? files : files[0])
+  }
 
-	widget.onUploadComplete(function() {
-		JFCustomWidget.sendData({value: files.join('\n')})
-	})
+  widget.onChange(function(file) {
+    files = []
 
-	JFCustomWidget.subscribe('submit', function() {
-		var msg = {
-			valid: !!files.length,
-			value: files.join('\n'),
-		}
+    if (file) {
+      var uploadedFiles = file.files ? file.files() : [file]
 
-		JFCustomWidget.sendSubmit(msg)
-	})
+      uploadedFiles.forEach(function(uploadedFile) {
+        uploadedFile.done(function(fileInfo) {
+          files.push(fileInfo.cdnUrl)
+        })
+      })
+    }
+    else {
+      JFCustomWidget.sendData({value: ''})
+    }
+  })
+
+  widget.onUploadComplete(function() {
+    JFCustomWidget.sendData({value: files.join('\n')})
+  })
+
+  JFCustomWidget.subscribe('submit', function() {
+    var msg = {
+      valid: !!files.length,
+      value: files.join('\n'),
+    }
+
+    JFCustomWidget.sendSubmit(msg)
+  })
 })

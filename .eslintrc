@@ -1,12 +1,15 @@
 {
   "parserOptions": {
-	"ecmaVersion": 5
+    "ecmaVersion": 5
   },
   "env": {
-	"browser": true
+    "browser": true
   },
   "extends": "uploadcare",
   "rules": {
-	"indent": ["error", "tab", { "SwitchCase": 1 }]
+    "require-jsdoc": "off",
+    "max-statements": "off",
+    "max-nested-callbacks": "off",
+    "new-cap": "off"
   }
 }

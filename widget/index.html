@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Upload files with Uploadcare</title>
+  <title>Upload files with Uploadcare</title>
 
-	<style>
-		html, body {
-			padding: 0;
-			margin: 0;
-		}
+  <style>
+    html, body {
+      padding: 0;
+      margin: 0;
+    }
 
-		.uploadcare--widget__button:focus {
-			outline: none;
-			box-shadow: inset 0 0 0 2px rgba(53, 53, 53, .7);
-		}
+    .uploadcare--widget__button:focus {
+      outline: none;
+      box-shadow: inset 0 0 0 2px rgba(53, 53, 53, .7);
+    }
 
-		.uploadcare--widget__file-name {
-			margin-left: 3px;
-		}
-		
-		.uploadcare--panel {
-			border: 1px solid rgba(53, 53, 53, .7);
-			border-radius: 2px;
-		}
-		
-		.uploadcare--panel__powered-by {
-			background: rgba(53, 53, 53, .9);
-		}
-	</style>
+    .uploadcare--widget__file-name {
+      margin-left: 3px;
+    }
 
-	<link rel="shortcut icon" href="https://ucarecdn.com/assets/images/favicons/favicon.d82a823f08a8.ico">
-	<link rel="icon" type="image/png" href="https://ucarecdn.com/assets/images/favicons/favicon-16x16.16da246cfaa6.png" sizes="16x16">
-	<link rel="icon" type="image/png" href="https://ucarecdn.com/assets/images/favicons/favicon-32x32.c27f006b6232.png" sizes="32x32">
+    .uploadcare--panel {
+      border: 1px solid rgba(53, 53, 53, .7);
+      border-radius: 2px;
+    }
 
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    .uploadcare--panel__powered-by {
+      background: rgba(53, 53, 53, .9);
+    }
+  </style>
 
-	<script>
-		UPLOADCARE_LIVE = false
-		UPLOADCARE_MANUAL_START = true;
-		UPLOADCARE__EMPTY_KEY_TEXT = ''
-			+ '<div class="uploadcare--tab__content">'
-			+ '  <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title">Hello!</div>'
-			+ '  <div class="uploadcare--text">Your <a class="uploadcare--link" href="https://uploadcare.com/documentation/keys/" target="_parent">public key</a> is not set.</div>'
-			+ '  <div class="uploadcare--text">Grab your free API key at <a class="uploadcare--link" href="https://uploadcare.com/" target="_parent">https://uploadcare.com/</a>,<br/>'
-			+ '    update JotForm widget and set <b>Public key</b>.</div>'
-			+ '</div>';
-	</script>
+  <link rel="shortcut icon" href="https://ucarecdn.com/assets/images/favicons/favicon.d82a823f08a8.ico">
+  <link rel="icon" type="image/png" href="https://ucarecdn.com/assets/images/favicons/favicon-16x16.16da246cfaa6.png"
+        sizes="16x16">
+  <link rel="icon" type="image/png" href="https://ucarecdn.com/assets/images/favicons/favicon-32x32.c27f006b6232.png"
+        sizes="32x32">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <script>
+    UPLOADCARE_LIVE = false
+    UPLOADCARE_MANUAL_START = true
+    UPLOADCARE__EMPTY_KEY_TEXT = ''
+      + '<div class="uploadcare--tab__content">'
+      + '  <div class="uploadcare--text uploadcare--text_size_large uploadcare--tab__title">Hello!</div>'
+      + '  <div class="uploadcare--text">Your <a class="uploadcare--link" href="https://uploadcare.com/documentation/keys/" target="_parent">public key</a> is not set.</div>'
+      + '  <div class="uploadcare--text">Grab your free API key at <a class="uploadcare--link" href="https://uploadcare.com/" target="_parent">https://uploadcare.com/</a>,<br/>'
+      + '    update JotForm widget and set <b>Public key</b>.</div>'
+      + '</div>'
+  </script>
 </head>
 <body>
 
