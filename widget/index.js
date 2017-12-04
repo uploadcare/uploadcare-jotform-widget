@@ -108,6 +108,13 @@ JFCustomWidget.subscribe('ready', function(data) {
 				})
 			})
 		}
+		else {
+			JFCustomWidget.sendData({value: ''})
+		}
+	})
+
+	widget.onUploadComplete(function() {
+		JFCustomWidget.sendData({value: files.join('\n')})
 	})
 
 	JFCustomWidget.subscribe('submit', function() {
