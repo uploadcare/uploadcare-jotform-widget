@@ -33,6 +33,8 @@ function cropOption(mode, width, height) {
 JFCustomWidget.subscribe('ready', function(data) {
   var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') === 'Yes')
   var hasEffectsTab = (JFCustomWidget.getWidgetSetting('effectsTab') === 'Yes')
+  var addFileName = (JFCustomWidget.getWidgetSetting('addFileName') === 'Yes')
+  var customString = JFCustomWidget.getWidgetSetting('customString') || ''
 
   var globalSettings = JFCustomWidget.getWidgetSetting('globalSettings')
 
@@ -99,7 +101,8 @@ JFCustomWidget.subscribe('ready', function(data) {
 
       uploadedFiles.forEach(function(uploadedFile) {
         uploadedFile.done(function(fileInfo) {
-          files.push(fileInfo.cdnUrl)
+          var fileName = (addFileName) ? fileInfo.name : ''
+          files.push(fileInfo.cdnUrl + customString + fileName)
         })
       })
     }
