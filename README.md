@@ -6,7 +6,7 @@ the widget in `JotForm Widgets`, search for
 [File Uploader by Uploadcare](https://widgets.jotform.com/widget/file_uploader_by_uploadcare).
 
 On top of that, there's that great
-[tutorial](https://uploadcare.com/tutorials/jotform/)
+[tutorial](https://uploadcare.com/docs/guides/jotform/)
 dedicated to integrating our File Uploader into a web form built with
 JotForm.
 
@@ -22,7 +22,7 @@ In order to use File Uploader by Uploadcare with JotForm:
 
 ## Installation
 
-Please, refer to the [tutorial](https://uploadcare.com/tutorials/jotform/)
+Please, refer to the [tutorial](https://uploadcare.com/docs/guides/jotform/)
 for most of the issues regarding:
 
 * Uploadcare and JotForm integration.
@@ -30,7 +30,7 @@ for most of the issues regarding:
 
 More info about Uploadcare Widget itself
 can be found in our
-[documentation](https://uploadcare.com/documentation/widget/).
+[documentation](https://uploadcare.com/docs/uploads/widget/).
 
 ## Live demo
 
