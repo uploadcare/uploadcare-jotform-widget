@@ -60,6 +60,7 @@ JFCustomWidget.subscribe('ready', function(data) {
   }
 
   uploadcare.start({
+    integration: 'JotForm; File-Uploader/' + document.getElementById('index-script').src.split('?v=')[1],
     publicKey: JFCustomWidget.getWidgetSetting('publicKey'),
     locale: JFCustomWidget.getWidgetSetting('locale') || 'en',
     imagesOnly: (JFCustomWidget.getWidgetSetting('imagesOnly') === 'Yes'),
