@@ -102,6 +102,7 @@ JFCustomWidget.subscribe('ready', function(data) {
       uploadedFiles.forEach(function(uploadedFile) {
         uploadedFile.done(function(fileInfo) {
           var fileName = (addFileName) ? fileInfo.name : ''
+
           files.push(fileInfo.cdnUrl + customString + fileName)
         })
       })
