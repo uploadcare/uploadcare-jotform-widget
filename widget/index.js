@@ -48,7 +48,6 @@ JFCustomWidget.subscribe('ready', function(data) {
 
   if (hasEffectsTab) {
     var effectsTabScript = document.createElement('script')
-    var indexScript = document.getElementById('index-script')
 
     effectsTabScript.addEventListener('load', function() {
       if (window.uploadcareTabEffects) {
@@ -57,7 +56,7 @@ JFCustomWidget.subscribe('ready', function(data) {
     })
     effectsTabScript.src = 'https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.min.js'
 
-    indexScript.parentNode.insertBefore(effectsTabScript, indexScript)
+    document.body.appendChild(effectsTabScript)
   }
 
   uploadcare.start({
