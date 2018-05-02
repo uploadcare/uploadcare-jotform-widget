@@ -10,6 +10,7 @@
     "require-jsdoc": "off",
     "max-statements": "off",
     "max-nested-callbacks": "off",
-    "new-cap": "off"
+    "new-cap": "off",
+    "id-length": "off"
   }
 }
