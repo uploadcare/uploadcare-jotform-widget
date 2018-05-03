@@ -98,22 +98,24 @@ JFCustomWidget.subscribe('ready', function(data) {
 
     if (file) {
       var uploadedFiles = file.files ? file.files() : [file]
+      var $ = uploadcare.jQuery
 
-      uploadedFiles.forEach(function(uploadedFile) {
-        uploadedFile.done(function(fileInfo) {
+      $.when.apply(null, uploadedFiles).done(function() {
+        var fileInfos = arguments
+
+        $.each(fileInfos, function(i, fileInfo) {
           var fileName = (addFileName) ? fileInfo.name : ''
+          var url = fileInfo.cdnUrl + customString + fileName
 
-          files.push(fileInfo.cdnUrl + customString + fileName)
+          files.push(url)
         })
+
+        JFCustomWidget.sendData({value: files.join('\n')})
       })
     }
     else {
       JFCustomWidget.sendData({value: ''})
     }
-  })
-
-  widget.onUploadComplete(function() {
-    JFCustomWidget.sendData({value: files.join('\n')})
   })
 
   JFCustomWidget.subscribe('submit', function() {
