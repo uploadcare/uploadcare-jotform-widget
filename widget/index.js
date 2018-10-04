@@ -98,6 +98,7 @@ JFCustomWidget.subscribe('ready', function(data) {
 
     if (file) {
       var uploadedFiles = file.files ? file.files() : [file]
+
       if(uploadedFiles.length){
         JFCustomWidget.hideWidgetError()
       }
