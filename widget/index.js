@@ -33,8 +33,13 @@ function cropOption(mode, width, height) {
 function sanitizeFileName(fileName) {
   var regexp = /[^A-Za-z0-9_]+/g
   var extension = fileName.split('.').pop()
+  extension = extension.replace(regexp, '')
   var name = fileName.substring(0, fileName.length - extension.length)
-  return name.replace(regexp, '') + '.' + extension.replace(regexp, '')
+  name = name.replace(regexp, '')
+  if (!name.length) {
+  	return 'noroot'
+  }
+  return name + '.' + extension
 }
 
 JFCustomWidget.subscribe('ready', function(data) {
