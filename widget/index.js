@@ -37,7 +37,7 @@ function sanitizeFileName(fileName) {
   var name = fileName.substring(0, fileName.length - extension.length)
   name = name.replace(regexp, '')
   if (!name.length) {
-  	return 'noroot'
+  	return 'noroot' + '.' + extension
   }
   return name + '.' + extension
 }
