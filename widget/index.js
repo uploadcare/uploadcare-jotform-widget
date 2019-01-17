@@ -30,6 +30,18 @@ function cropOption(mode, width, height) {
   }
 }
 
+function sanitizeFileName(fileName) {
+  var regexp = /[^A-Za-z0-9_]+/g
+  var extension = fileName.split('.').pop()
+  extension = extension.replace(regexp, '')
+  var name = fileName.substring(0, fileName.length - extension.length)
+  name = name.replace(regexp, '')
+  if (!name.length) {
+  	return 'noroot' + '.' + extension
+  }
+  return name + '.' + extension
+}
+
 JFCustomWidget.subscribe('ready', function(data) {
   var isMultiple = (JFCustomWidget.getWidgetSetting('multiple') === 'Yes')
   var hasEffectsTab = (JFCustomWidget.getWidgetSetting('effectsTab') === 'Yes')
@@ -109,7 +121,7 @@ JFCustomWidget.subscribe('ready', function(data) {
         var fileInfos = arguments
 
         $.each(fileInfos, function(i, fileInfo) {
-          var fileName = (addFileName) ? fileInfo.name : ''
+          var fileName = (addFileName) ? sanitizeFileName(fileInfo.name) : ''
           var url = fileInfo.cdnUrl + customString + fileName
 
           files.push(url)
