@@ -139,6 +139,33 @@ JFCustomWidget.subscribe('ready', function(data) {
     }
   })
 
+  widget.onDialogOpen(function(dialog) {
+    dialog.fileColl.onAdd.add(function() {
+      files = []
+      // eslint-disable-next-line no-underscore-dangle
+      Promise.all(dialog.fileColl.__items).then(function(result) {
+        files = result.map(function(fileInfo) {
+          var fileName = (addFileName) ? sanitizeFileName(fileInfo.name) : ''
+
+          return fileInfo.cdnUrl + customString + fileName
+        })
+        JFCustomWidget.sendData({value: files.join('\n')})
+      })
+    })
+    dialog.fileColl.onRemove.add(function() {
+      files = []
+      // eslint-disable-next-line no-underscore-dangle
+      Promise.all(dialog.fileColl.__items).then(function(result) {
+        files = result.map(function(fileInfo) {
+          var fileName = (addFileName) ? sanitizeFileName(fileInfo.name) : ''
+
+          return fileInfo.cdnUrl + customString + fileName
+        })
+        JFCustomWidget.sendData({value: files.join('\n')})
+      })
+    })
+  })
+
   JFCustomWidget.subscribe('submit', function() {
     var msg = {
       valid: !!files.length,
