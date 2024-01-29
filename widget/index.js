@@ -33,12 +33,16 @@ function cropOption(mode, width, height) {
 function sanitizeFileName(fileName) {
   var regexp = /[^A-Za-z0-9_]+/g
   var extension = fileName.split('.').pop()
+
   extension = extension.replace(regexp, '')
+
   var name = fileName.substring(0, fileName.length - extension.length)
+
   name = name.replace(regexp, '')
   if (!name.length) {
-  	return 'file' + '.' + extension
+    return 'file' + '.' + extension
   }
+
   return name + '.' + extension
 }
 
@@ -111,7 +115,7 @@ JFCustomWidget.subscribe('ready', function(data) {
     if (file) {
       var uploadedFiles = file.files ? file.files() : [file]
 
-      if(uploadedFiles.length){
+      if (uploadedFiles.length) {
         JFCustomWidget.hideWidgetError()
       }
 
@@ -133,6 +137,33 @@ JFCustomWidget.subscribe('ready', function(data) {
     else {
       JFCustomWidget.sendData({value: ''})
     }
+  })
+
+  widget.onDialogOpen(function(dialog) {
+    dialog.fileColl.onAdd.add(function() {
+      files = []
+      // eslint-disable-next-line no-underscore-dangle
+      Promise.all(dialog.fileColl.__items).then(function(result) {
+        files = result.map(function(fileInfo) {
+          var fileName = (addFileName) ? sanitizeFileName(fileInfo.name) : ''
+
+          return fileInfo.cdnUrl + customString + fileName
+        })
+        JFCustomWidget.sendData({value: files.join('\n')})
+      })
+    })
+    dialog.fileColl.onRemove.add(function() {
+      files = []
+      // eslint-disable-next-line no-underscore-dangle
+      Promise.all(dialog.fileColl.__items).then(function(result) {
+        files = result.map(function(fileInfo) {
+          var fileName = (addFileName) ? sanitizeFileName(fileInfo.name) : ''
+
+          return fileInfo.cdnUrl + customString + fileName
+        })
+        JFCustomWidget.sendData({value: files.join('\n')})
+      })
+    })
   })
 
   JFCustomWidget.subscribe('submit', function() {
